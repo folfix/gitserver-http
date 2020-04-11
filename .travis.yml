@@ -4,4 +4,4 @@ language: generic
 script:
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
   - docker build -t folfix/gitserver .
-  - docker push folfix/quick-app:latest
+  - docker push folfix/gitserver:latest

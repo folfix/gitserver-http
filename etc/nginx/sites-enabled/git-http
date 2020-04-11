@@ -27,6 +27,8 @@ server {
     fastcgi_cache_lock      on;
     fastcgi_cache_valid     200 3m;
     fastcgi_ignore_headers  Cache-Control Expires Set-Cookie;
+    auth_basic "Restricted Content";
+    auth_basic_user_file /etc/nginx/.htpasswd;
   }
 
   # GET the git repo HEAD file
@@ -38,6 +40,8 @@ server {
     fastcgi_param           PATH_INFO $uri;
     fastcgi_param           REMOTE_USER $remote_user;
     fastcgi_pass            unix:/var/run/fcgiwrap.socket;
+    auth_basic "Restricted Content";
+    auth_basic_user_file /etc/nginx/.htpasswd;
   }
 
   # POST requests caching
@@ -55,9 +59,13 @@ server {
     fastcgi_cache_lock      on;
     fastcgi_cache_valid     200 10m;
     fastcgi_ignore_headers  Cache-Control Expires Set-Cookie;
+    auth_basic "Restricted Content";
+    auth_basic_user_file /etc/nginx/.htpasswd;
   }
 
   location / {
     try_files       $uri $uri/ =404;
+    auth_basic "Restricted Content";
+    auth_basic_user_file /etc/nginx/.htpasswd;
   }
 }

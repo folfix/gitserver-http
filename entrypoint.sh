@@ -39,9 +39,11 @@ main() {
 initialize_services() {
   # Check permissions on $GIT_PROJECT_ROOT
   if [[ ! $(stat -c %A ${GIT_PROJECT_ROOT}) -eq "drwxr-xr-x" ]]; then
-    chown -R giti:git $GIT_PROJECT_ROOT
+    chown -R git:git $GIT_PROJECT_ROOT
     chmod -R 775 $GIT_PROJECT_ROOT
   fi
+
+  export HOME=$GIT_PROJECT_ROOT
 
   /usr/bin/spawn-fcgi \
     -s $FCGISOCKET \
@@ -76,7 +78,7 @@ init_and_commit() {
 
   git init &>/dev/null
   git add --all . &>/dev/null
-  git commit -m "first commit" &>/dev/null
+  git commit -m "Initial commit" &>/dev/null
   git clone --bare $tmp_dir $GIT_PROJECT_ROOT/${dir}.git &>/dev/null
 
   popd >/dev/null

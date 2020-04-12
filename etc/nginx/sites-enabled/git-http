@@ -4,8 +4,8 @@ fastcgi_cache_key "$scheme$request_method$host$request_uri|$request_body";
 
 server {
   server_name       _;
-  listen 80         default_server;
-  listen [::]:80    default_server;
+  listen 8080         default_server;
+  listen [::]:8080    default_server;
 
   location /status {
     add_header Content-Type text/plain;

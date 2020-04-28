@@ -4,4 +4,7 @@ language: generic
 script:
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
   - docker build -t folfix/gitserver .
+  - export GIT_SHORT=$(git rev-parse --short HEAD)
+  - docker tag folfix/gitserver folfix/gitserver:$GIT_SHORT
+  - docker push folfix/gitserver:$GIT_SHORT
   - docker push folfix/gitserver:latest
